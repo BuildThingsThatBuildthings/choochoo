@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚂 CHOO-CHOO MATH TRAIN! 🚂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard', cursive;
+            background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 60%, #90EE90 60%, #228B22 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        /* Clouds */
+        .cloud {
+            position: fixed;
+            background: white;
+            border-radius: 50px;
+            animation: floatCloud 25s infinite linear;
+            z-index: 1;
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .cloud-1 {
+            width: 120px;
+            height: 50px;
+            top: 60px;
+            left: -150px;
+        }
+
+        .cloud-1::before {
+            width: 60px;
+            height: 60px;
+            top: -30px;
+            left: 20px;
+        }
+
+        .cloud-1::after {
+            width: 45px;
+            height: 45px;
+            top: -20px;
+            left: 60px;
+        }
+
+        .cloud-2 {
+            width: 100px;
+            height: 40px;
+            top: 120px;
+            left: -150px;
+            animation-delay: -10s;
+        }
+
+        .cloud-2::before {
+            width: 50px;
+            height: 50px;
+            top: -25px;
+            left: 15px;
+        }
+
+        .cloud-2::after {
+            width: 35px;
+            height: 35px;
+            top: -15px;
+            left: 50px;
+        }
+
+        .cloud-3 {
+            width: 80px;
+            height: 35px;
+            top: 40px;
+            left: -150px;
+            animation-delay: -18s;
+        }
+
+        .cloud-3::before {
+            width: 40px;
+            height: 40px;
+            top: -20px;
+            left: 10px;
+        }
+
+        .cloud-3::after {
+            width: 30px;
+            height: 30px;
+            top: -12px;
+            left: 40px;
+        }
+
+        @keyframes floatCloud {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(100vw + 300px)); }
+        }
+
+        /* Sun */
+        .sun {
+            position: fixed;
+            top: 30px;
+            right: 60px;
+            width: 100px;
+            height: 100px;
+            background: #FFD700;
+            border-radius: 50%;
+            box-shadow: 0 0 60px #FFD700, 0 0 120px #FFA500;
+            animation: sunPulse 3s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        .sun::before {
+            content: '😊';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+        }
+
+        @keyframes sunPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 60px #FFD700, 0 0 120px #FFA500; }
+            50% { transform: scale(1.1); box-shadow: 0 0 80px #FFD700, 0 0 150px #FFA500; }
+        }
+
+        /* Title */
+        .title {
+            text-align: center;
+            padding: 15px;
+            font-size: 2.8em;
+            color: #FF4500;
+            text-shadow: 4px 4px 0 #FFD700, 8px 8px 0 rgba(0,0,0,0.1);
+            animation: titleBounce 0.8s infinite;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-8px) rotate(1deg); }
+        }
+
+        /* Train Track */
+        .track-container {
+            position: relative;
+            margin-top: 10px;
+            height: 160px;
+            z-index: 5;
+        }
+
+        .track {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 25px;
+            background: repeating-linear-gradient(
+                90deg,
+                #8B4513 0px,
+                #8B4513 45px,
+                #654321 45px,
+                #654321 55px
+            );
+        }
+
+        .track::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #5a5a5a, #4a4a4a);
+        }
+
+        .track::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #5a5a5a, #4a4a4a);
+        }
+
+        /* Train */
+        .train {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            animation: trainMove 20s linear infinite;
+        }
+
+        @keyframes trainMove {
+            0% { left: -600px; }
+            100% { left: 100%; }
+        }
+
+        .engine {
+            width: 130px;
+            height: 85px;
+            background: linear-gradient(180deg, #FF3333 0%, #CC0000 100%);
+            border-radius: 10px 40px 5px 5px;
+            position: relative;
+            margin-right: 8px;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.3);
+        }
+
+        .engine::before {
+            content: '';
+            position: absolute;
+            top: -35px;
+            left: 15px;
+            width: 35px;
+            height: 45px;
+            background: linear-gradient(180deg, #444 0%, #222 100%);
+            border-radius: 8px 8px 0 0;
+        }
+
+        .chimney {
+            position: absolute;
+            top: -55px;
+            left: 20px;
+            width: 25px;
+            height: 30px;
+            background: linear-gradient(180deg, #555 0%, #333 100%);
+            border-radius: 5px 5px 0 0;
+        }
+
+        .smoke {
+            position: absolute;
+            top: -90px;
+            left: 18px;
+            font-size: 35px;
+            animation: smokeRise 0.6s infinite;
+        }
+
+        @keyframes smokeRise {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-25px) scale(1.8); }
+        }
+
+        .engine-window {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 40px;
+            height: 35px;
+            background: linear-gradient(180deg, #87CEEB 0%, #5CACEE 100%);
+            border: 4px solid #FFD700;
+            border-radius: 8px;
+        }
+
+        .engine-face {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            font-size: 35px;
+        }
+
+        .wheel {
+            position: absolute;
+            bottom: -18px;
+            width: 35px;
+            height: 35px;
+            background: radial-gradient(circle at 30% 30%, #555, #222);
+            border-radius: 50%;
+            border: 5px solid #777;
+            animation: wheelSpin 0.4s linear infinite;
+        }
+
+        .wheel::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 12px;
+            height: 12px;
+            background: #aaa;
+            border-radius: 50%;
+        }
+
+        .wheel-1 { left: 12px; }
+        .wheel-2 { left: 50px; }
+        .wheel-3 { left: 88px; }
+
+        @keyframes wheelSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .car {
+            width: 90px;
+            height: 65px;
+            border-radius: 8px;
+            position: relative;
+            margin-right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 -8px 15px rgba(0,0,0,0.3);
+        }
+
+        .car.blue { background: linear-gradient(180deg, #4169E1 0%, #2E4A9E 100%); }
+        .car.yellow { background: linear-gradient(180deg, #FFD700 0%, #DAA520 100%); }
+        .car.green { background: linear-gradient(180deg, #32CD32 0%, #228B22 100%); }
+        .car.purple { background: linear-gradient(180deg, #9370DB 0%, #6A5ACD 100%); }
+        .car.orange { background: linear-gradient(180deg, #FF8C00 0%, #FF6600 100%); }
+
+        .car .wheel {
+            width: 25px;
+            height: 25px;
+            bottom: -12px;
+        }
+
+        .car .wheel-1 { left: 10px; }
+        .car .wheel-2 { left: 55px; }
+
+        .car-animal {
+            font-size: 2.2em;
+            animation: carAnimalBounce 0.5s ease-in-out infinite;
+        }
+
+        @keyframes carAnimalBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Game Area */
+        .game-area {
+            max-width: 750px;
+            margin: 20px auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            border: 6px solid #FFD700;
+            position: relative;
+            z-index: 10;
+        }
+
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            padding: 12px 25px;
+            font-size: 1.2em;
+            font-family: inherit;
+            border: 4px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f0f0f0;
+        }
+
+        .mode-btn.active {
+            background: #FFD700;
+            border-color: #FFA500;
+            transform: scale(1.1);
+        }
+
+        .mode-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .question {
+            text-align: center;
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+
+        /* Animals Container */
+        .animals-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+            min-height: 130px;
+            padding: 15px;
+            background: rgba(255, 255, 200, 0.5);
+            border-radius: 20px;
+            border: 3px dashed #FFD700;
+        }
+
+        .animal {
+            font-size: 4.5em;
+            cursor: pointer;
+            transition: transform 0.2s;
+            animation: animalWiggle 0.6s ease-in-out infinite;
+            position: relative;
+            filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.3));
+        }
+
+        .animal:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        .animal:hover {
+            transform: scale(1.3) rotate(10deg);
+            z-index: 100;
+        }
+
+        .animal.roar {
+            animation: animalRoar 0.4s ease-in-out !important;
+        }
+
+        @keyframes animalWiggle {
+            0%, 100% { transform: rotate(-8deg) scale(1); }
+            50% { transform: rotate(8deg) scale(1.05); }
+        }
+
+        @keyframes animalRoar {
+            0% { transform: scale(1) rotate(0deg); }
+            20% { transform: scale(1.6) rotate(-15deg); }
+            40% { transform: scale(1.8) rotate(15deg); }
+            60% { transform: scale(1.6) rotate(-10deg); }
+            80% { transform: scale(1.4) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .growl-text {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.35em;
+            color: #FF0000;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 2px 2px 0 #FFD700;
+            opacity: 0;
+            animation: growlPop 0.6s forwards;
+        }
+
+        @keyframes growlPop {
+            0% { opacity: 0; transform: translateX(-50%) translateY(0) scale(0.5); }
+            30% { opacity: 1; transform: translateX(-50%) translateY(-15px) scale(1.5); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-40px) scale(1); }
+        }
+
+        /* Answer Buttons */
+        .answers {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .answer-btn {
+            width: 110px;
+            height: 110px;
+            font-size: 3.2em;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .answer-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        .answer-btn:active {
+            transform: translateY(4px);
+        }
+
+        .answer-btn.red {
+            background: linear-gradient(180deg, #FF6B6B 0%, #EE5A5A 100%);
+            color: white;
+            box-shadow: 0 8px 0 #CC4444, 0 12px 20px rgba(0,0,0,0.2);
+        }
+        .answer-btn.blue {
+            background: linear-gradient(180deg, #4ECDC4 0%, #3DBDB5 100%);
+            color: white;
+            box-shadow: 0 8px 0 #2E9E97, 0 12px 20px rgba(0,0,0,0.2);
+        }
+        .answer-btn.yellow {
+            background: linear-gradient(180deg, #FFE66D 0%, #FFDD44 100%);
+            color: #333;
+            box-shadow: 0 8px 0 #CCAA33, 0 12px 20px rgba(0,0,0,0.2);
+        }
+        .answer-btn.green {
+            background: linear-gradient(180deg, #95E879 0%, #7DD566 100%);
+            color: #333;
+            box-shadow: 0 8px 0 #5BB344, 0 12px 20px rgba(0,0,0,0.2);
+        }
+
+        .answer-btn.correct {
+            animation: correctPulse 0.6s;
+            background: linear-gradient(180deg, #00FF00 0%, #00DD00 100%) !important;
+            box-shadow: 0 0 30px #00FF00, 0 8px 0 #00AA00 !important;
+        }
+
+        .answer-btn.wrong {
+            animation: wrongShake 0.6s;
+            background: linear-gradient(180deg, #FF0000 0%, #DD0000 100%) !important;
+            box-shadow: 0 0 30px #FF0000, 0 8px 0 #AA0000 !important;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2) rotate(-5deg); }
+            50% { transform: scale(1.3) rotate(5deg); }
+            75% { transform: scale(1.2) rotate(-5deg); }
+        }
+
+        @keyframes wrongShake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-15px) rotate(-5deg); }
+            40% { transform: translateX(15px) rotate(5deg); }
+            60% { transform: translateX(-15px) rotate(-5deg); }
+            80% { transform: translateX(15px) rotate(5deg); }
+        }
+
+        /* Score */
+        .score-container {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 3px dashed #FFD700;
+        }
+
+        .score {
+            font-size: 2em;
+            color: #FF4500;
+            text-shadow: 2px 2px 0 #FFD700;
+        }
+
+        .stars {
+            font-size: 2.2em;
+            margin-top: 10px;
+            min-height: 40px;
+        }
+
+        .star-pop {
+            display: inline-block;
+            animation: starPop 0.5s ease-out;
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.5) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* Celebration */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            animation: confettiFall 3s forwards;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(1080deg); opacity: 0; }
+        }
+
+        /* Start Screen */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .start-screen h1 {
+            font-size: 3.5em;
+            color: white;
+            text-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+            animation: titleBounce 0.8s infinite;
+        }
+
+        .start-screen .subtitle {
+            font-size: 1.5em;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+        }
+
+        .start-screen .train-emoji {
+            font-size: 10em;
+            animation: trainWiggle 0.4s infinite;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.3));
+        }
+
+        @keyframes trainWiggle {
+            0%, 100% { transform: translateX(-8px) rotate(-2deg); }
+            50% { transform: translateX(8px) rotate(2deg); }
+        }
+
+        .start-animals {
+            font-size: 4em;
+            margin: 20px 0;
+        }
+
+        .start-animals span {
+            display: inline-block;
+            animation: danceAnimal 0.6s ease-in-out infinite;
+            margin: 0 10px;
+        }
+
+        .start-animals span:nth-child(1) { animation-delay: 0s; }
+        .start-animals span:nth-child(2) { animation-delay: 0.15s; }
+        .start-animals span:nth-child(3) { animation-delay: 0.3s; }
+        .start-animals span:nth-child(4) { animation-delay: 0.45s; }
+
+        @keyframes danceAnimal {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .start-btn {
+            margin-top: 30px;
+            padding: 25px 70px;
+            font-size: 2.2em;
+            font-family: inherit;
+            background: linear-gradient(180deg, #FFD700 0%, #FFA500 100%);
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 10px 0 #CC8800, 0 15px 30px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 0 #CC8800, 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .start-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 5px 0 #CC8800, 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Level indicator */
+        .level {
+            text-align: center;
+            font-size: 1.4em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: linear-gradient(180deg, #9370DB 0%, #6A5ACD 100%);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            box-shadow: 0 3px 0 #483D8B;
+        }
+
+        /* Sound toggle */
+        .sound-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 2.2em;
+            cursor: pointer;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        .sound-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .title { font-size: 1.8em; }
+            .game-area { margin: 10px; padding: 15px; }
+            .animal { font-size: 3em; }
+            .answer-btn { width: 80px; height: 80px; font-size: 2.2em; }
+            .start-screen h1 { font-size: 2em; }
+            .start-screen .train-emoji { font-size: 6em; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Start Screen -->
+    <div class="start-screen" id="startScreen">
+        <div class="train-emoji">🚂</div>
+        <h1>CHOO-CHOO MATH TRAIN!</h1>
+        <p class="subtitle">Count the animals!</p>
+        <div class="start-animals">
+            <span>🦁</span>
+            <span>🐯</span>
+            <span>🐻</span>
+            <span>🦖</span>
+        </div>
+        <p style="color: rgba(255,255,255,0.9); font-size: 1.3em; margin: 10px 0;">
+            Click the animals to hear them GROWL!
+        </p>
+        <button class="start-btn" onclick="startGame()">🎉 LET'S GO! 🎉</button>
+    </div>
+
+    <!-- Sound Toggle -->
+    <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</div>
+
+    <!-- Sky Elements -->
+    <div class="sun"></div>
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div>
+
+    <!-- Title -->
+    <h1 class="title">🚂 CHOO-CHOO MATH TRAIN! 🚂</h1>
+
+    <!-- Train Track -->
+    <div class="track-container">
+        <div class="train" id="train">
+            <div class="engine">
+                <div class="chimney"></div>
+                <div class="smoke">💨</div>
+                <div class="engine-window"></div>
+                <div class="engine-face">😄</div>
+                <div class="wheel wheel-1"></div>
+                <div class="wheel wheel-2"></div>
+                <div class="wheel wheel-3"></div>
+            </div>
+            <div class="car blue">
+                <span class="car-animal">🦁</span>
+                <div class="wheel wheel-1"></div>
+                <div class="wheel wheel-2"></div>
+            </div>
+            <div class="car yellow">
+                <span class="car-animal">🐯</span>
+                <div class="wheel wheel-1"></div>
+                <div class="wheel wheel-2"></div>
+            </div>
+            <div class="car green">
+                <span class="car-animal">🐻</span>
+                <div class="wheel wheel-1"></div>
+                <div class="wheel wheel-2"></div>
+            </div>
+            <div class="car purple">
+                <span class="car-animal">🦖</span>
+                <div class="wheel wheel-1"></div>
+                <div class="wheel wheel-2"></div>
+            </div>
+            <div class="car orange">
+                <span class="car-animal">🐺</span>
+                <div class="wheel wheel-1"></div>
+                <div class="wheel wheel-2"></div>
+            </div>
+        </div>
+        <div class="track"></div>
+    </div>
+
+    <!-- Game Area -->
+    <div class="game-area">
+        <div class="mode-toggle">
+            <button class="mode-btn active" id="countMode" onclick="setMode('count')">🔢 Count</button>
+            <button class="mode-btn" id="mathMode" onclick="setMode('math')">➕ Math</button>
+        </div>
+
+        <div class="level"><span class="level-badge" id="level">Level 1</span></div>
+        <div class="question" id="question">How many animals?</div>
+
+        <div class="animals-container" id="animalsContainer">
+            <!-- Animals will be added here -->
+        </div>
+
+        <div class="answers" id="answers">
+            <!-- Answer buttons will be added here -->
+        </div>
+
+        <div class="score-container">
+            <div class="score">Score: <span id="score">0</span> 🎯</div>
+            <div class="stars" id="stars"></div>
+        </div>
+    </div>
+
+    <!-- Celebration Container -->
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        // Game state
+        let score = 0;
+        let level = 1;
+        let correctAnswer = 0;
+        let soundEnabled = true;
+        let gameMode = 'count'; // 'count' or 'math'
+        let questionsAnswered = 0;
+
+        // Animal emojis with their growl sounds
+        const animals = [
+            { emoji: '🦁', growl: 'ROAR!!' },
+            { emoji: '🐯', growl: 'GRRR!!' },
+            { emoji: '🐻', growl: 'RAWRR!!' },
+            { emoji: '🦖', growl: 'RAWR!!' },
+            { emoji: '🐺', growl: 'HOWL!!' },
+            { emoji: '🦈', growl: 'CHOMP!!' },
+            { emoji: '🐊', growl: 'SNAP!!' },
+            { emoji: '🦍', growl: 'OOH OOH!!' },
+            { emoji: '🐘', growl: 'TRUMPET!!' },
+            { emoji: '🦬', growl: 'SNORT!!' }
+        ];
+
+        const colors = ['red', 'blue', 'yellow', 'green'];
+
+        // Audio context for sounds
+        let audioContext;
+
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            } catch(e) {
+                console.log('Audio not supported');
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled || !audioContext) return;
+
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                switch(type) {
+                    case 'correct':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1);
+                        oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2);
+                        gainNode.gain.setValueAtTime(0.4, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.5);
+                        break;
+                    case 'wrong':
+                        oscillator.type = 'sawtooth';
+                        oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(150, audioContext.currentTime + 0.15);
+                        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                    case 'growl':
+                        oscillator.type = 'sawtooth';
+                        oscillator.frequency.setValueAtTime(120, audioContext.currentTime);
+                        oscillator.frequency.exponentialRampToValueAtTime(60, audioContext.currentTime + 0.25);
+                        gainNode.gain.setValueAtTime(0.35, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.35);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.35);
+                        break;
+                    case 'choo':
+                        oscillator.type = 'triangle';
+                        oscillator.frequency.setValueAtTime(500, audioContext.currentTime);
+                        oscillator.frequency.setValueAtTime(400, audioContext.currentTime + 0.15);
+                        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                    case 'click':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
+                }
+            } catch(e) {
+                // Ignore audio errors
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggle').textContent = soundEnabled ? '🔊' : '🔇';
+        }
+
+        function setMode(mode) {
+            gameMode = mode;
+            document.getElementById('countMode').classList.toggle('active', mode === 'count');
+            document.getElementById('mathMode').classList.toggle('active', mode === 'math');
+            playSound('click');
+            generateQuestion();
+        }
+
+        function startGame() {
+            initAudio();
+            document.getElementById('startScreen').classList.add('hidden');
+            playSound('choo');
+            generateQuestion();
+        }
+
+        function generateQuestion() {
+            const container = document.getElementById('animalsContainer');
+            container.innerHTML = '';
+
+            if (gameMode === 'count') {
+                // Counting mode - count the animals
+                let maxCount = Math.min(3 + level, 10);
+                correctAnswer = Math.floor(Math.random() * maxCount) + 1;
+
+                // Pick a random animal
+                const animal = animals[Math.floor(Math.random() * animals.length)];
+
+                // Create animals
+                for (let i = 0; i < correctAnswer; i++) {
+                    const animalDiv = document.createElement('div');
+                    animalDiv.className = 'animal';
+                    animalDiv.textContent = animal.emoji;
+                    animalDiv.style.animationDelay = `${(i * 0.1) % 0.5}s`;
+
+                    animalDiv.onclick = function() {
+                        makeAnimalRoar(this, animal.growl);
+                    };
+
+                    container.appendChild(animalDiv);
+                }
+
+                document.getElementById('question').textContent = `How many ${animal.emoji} do you see?`;
+            } else {
+                // Math mode - simple addition
+                const num1 = Math.floor(Math.random() * (3 + level)) + 1;
+                const num2 = Math.floor(Math.random() * (3 + level)) + 1;
+                correctAnswer = num1 + num2;
+
+                // Show first group of animals
+                const animal1 = animals[Math.floor(Math.random() * animals.length)];
+                const animal2 = animals[Math.floor(Math.random() * animals.length)];
+
+                for (let i = 0; i < num1; i++) {
+                    const animalDiv = document.createElement('div');
+                    animalDiv.className = 'animal';
+                    animalDiv.textContent = animal1.emoji;
+                    animalDiv.onclick = function() {
+                        makeAnimalRoar(this, animal1.growl);
+                    };
+                    container.appendChild(animalDiv);
+                }
+
+                // Add plus sign
+                const plus = document.createElement('div');
+                plus.style.cssText = 'font-size: 3em; color: #FF4500; font-weight: bold; display: flex; align-items: center;';
+                plus.textContent = '+';
+                container.appendChild(plus);
+
+                for (let i = 0; i < num2; i++) {
+                    const animalDiv = document.createElement('div');
+                    animalDiv.className = 'animal';
+                    animalDiv.textContent = animal2.emoji;
+                    animalDiv.onclick = function() {
+                        makeAnimalRoar(this, animal2.growl);
+                    };
+                    container.appendChild(animalDiv);
+                }
+
+                document.getElementById('question').textContent = `${num1} ${animal1.emoji} + ${num2} ${animal2.emoji} = ?`;
+            }
+
+            generateAnswers();
+            document.getElementById('level').textContent = `Level ${level}`;
+        }
+
+        function makeAnimalRoar(element, growlText) {
+            element.classList.add('roar');
+            playSound('growl');
+
+            // Add growl text
+            const existingGrowl = element.querySelector('.growl-text');
+            if (existingGrowl) existingGrowl.remove();
+
+            const growl = document.createElement('span');
+            growl.className = 'growl-text';
+            growl.textContent = growlText;
+            element.appendChild(growl);
+
+            setTimeout(() => {
+                element.classList.remove('roar');
+                if (growl.parentNode) growl.remove();
+            }, 600);
+        }
+
+        function generateAnswers() {
+            const container = document.getElementById('answers');
+            container.innerHTML = '';
+
+            // Generate wrong answers
+            let answers = [correctAnswer];
+            while (answers.length < 4) {
+                let offset = Math.floor(Math.random() * 5) - 2;
+                if (offset === 0) offset = Math.random() > 0.5 ? 1 : -1;
+                let wrong = correctAnswer + offset;
+                if (wrong > 0 && !answers.includes(wrong)) {
+                    answers.push(wrong);
+                }
+            }
+
+            // Shuffle answers
+            answers.sort(() => Math.random() - 0.5);
+
+            // Create buttons
+            answers.forEach((answer, index) => {
+                const btn = document.createElement('button');
+                btn.className = `answer-btn ${colors[index]}`;
+                btn.textContent = answer;
+                btn.onclick = () => checkAnswer(answer, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(answer, btn) {
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach(b => b.disabled = true);
+
+            questionsAnswered++;
+
+            if (answer === correctAnswer) {
+                btn.classList.add('correct');
+                playSound('correct');
+                score += level * 10;
+                document.getElementById('score').textContent = score;
+
+                // Add star with animation
+                const stars = document.getElementById('stars');
+                const star = document.createElement('span');
+                star.className = 'star-pop';
+                star.textContent = '⭐';
+                stars.appendChild(star);
+
+                // Celebrate!
+                createConfetti();
+
+                // Level up every 3 correct answers
+                if (questionsAnswered % 3 === 0) {
+                    level++;
+                }
+
+                setTimeout(() => {
+                    generateQuestion();
+                }, 1200);
+            } else {
+                btn.classList.add('wrong');
+                playSound('wrong');
+
+                // Show correct answer
+                buttons.forEach(b => {
+                    if (parseInt(b.textContent) === correctAnswer) {
+                        setTimeout(() => b.classList.add('correct'), 300);
+                    }
+                });
+
+                setTimeout(() => {
+                    generateQuestion();
+                }, 1800);
+            }
+        }
+
+        function createConfetti() {
+            const celebration = document.getElementById('celebration');
+            const confettiEmojis = ['🎉', '🎊', '⭐', '🌟', '✨', '💫', '🎈', '🎁'];
+            const colors = ['#FF6B6B', '#4ECDC4', '#FFE66D', '#95E879', '#9370DB', '#FF8C00', '#FF69B4'];
+
+            for (let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-50px';
+                confetti.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                confetti.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                confetti.style.animationDuration = (Math.random() * 1 + 2) + 's';
+                celebration.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 3500);
+            }
+        }
+
+        // Extra smoke puffs animation
+        setInterval(() => {
+            const smoke = document.querySelector('.smoke');
+            if (smoke) {
+                smoke.style.animation = 'none';
+                smoke.offsetHeight;
+                smoke.style.animation = 'smokeRise 0.6s infinite';
+            }
+        }, 600);
+
+        // Make train cars animate
+        const carAnimals = document.querySelectorAll('.car-animal');
+        carAnimals.forEach((animal, i) => {
+            animal.style.animationDelay = `${i * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
