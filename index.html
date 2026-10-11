@@ -1035,9 +1035,14 @@
 
             // Generate wrong answers
             let answers = [correctAnswer];
+            let attempts = 0;
+            let range = 3;
             while (answers.length < 4) {
-                let offset = Math.floor(Math.random() * 5) - 2;
-                if (offset === 0) offset = Math.random() > 0.5 ? 1 : -1;
+                attempts++;
+                // Widen the range if we're struggling to find unique wrong answers
+                if (attempts > 20) range++;
+                let offset = Math.floor(Math.random() * (range * 2)) - range;
+                if (offset === 0) offset = range;
                 let wrong = correctAnswer + offset;
                 if (wrong > 0 && !answers.includes(wrong)) {
                     answers.push(wrong);
